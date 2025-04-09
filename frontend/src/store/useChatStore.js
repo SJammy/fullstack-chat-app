@@ -30,6 +30,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get(`/messages/${userId}`);
       set({ messages: res.data });
     } catch (error) {
+      console.log("error.response: ", error.response);
       const errorMessage = error.response?.data?.message || "An error occurred"
       toast.error(errorMessage);
     } finally {
@@ -42,6 +43,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData);
       set({ messages: [...messages, res.data] });
     } catch (error) {
+      console.log("error.response: ", error.response);
       const errorMessage = error.response?.data?.message || "An error occurred"
       toast.error(errorMessage);
     }
@@ -68,5 +70,16 @@ export const useChatStore = create((set, get) => ({
     socket.off("newMessage");
   },
 
-  setSelectedUser: (selectedUser) => set({ selectedUser }),
+  // setSelectedUser: (selectedUser) => set({ selectedUser }),
+  setSelectedUser: (selectedUser) => {
+    // Unsubscribe from the previous user's messages first
+    get().unsubscribeFromMessages();
+  
+    // Set the new selected user
+    set({ selectedUser });
+  
+    // Now subscribe to the new user's messages
+    get().subscribeToMessages();
+  },
+  
 }));

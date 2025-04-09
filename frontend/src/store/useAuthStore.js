@@ -36,6 +36,7 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Account created successfully");
       get().connectSocket();
     } catch (error) {
+      console.log("error.response: ", error.response);
       const errorMessage = error.response?.data?.message || "An error occurred"
       toast.error(errorMessage);
     } finally {
@@ -52,6 +53,7 @@ export const useAuthStore = create((set, get) => ({
 
       get().connectSocket();
     } catch (error) {
+      console.log("error.response: ", error.response);
       const errorMessage = error.response?.data?.message || "An error occurred"
       toast.error(errorMessage);
     } finally {
@@ -66,6 +68,7 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Logged out successfully");
       get().disconnectSocket();
     } catch (error) {
+      console.log("error.response: ", error.response);
       const errorMessage = error.response?.data?.message || "An error occurred"
       toast.error(errorMessage);
     }
