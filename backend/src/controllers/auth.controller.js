@@ -103,7 +103,7 @@ export const updateProfile = async (req, res) => {
     const userId = req.user._id
 
     if (!profilePic) {
-      res.status(400).json({ message: 'Profile pic is required' })
+      return res.status(400).json({ message: 'Profile pic is required' })
     }
 
     const uploadResponse = await cloudinary.uploader.upload(profilePic)
@@ -126,7 +126,9 @@ export const updateProfile = async (req, res) => {
 //
 // CHECK AUTH
 export const checkAuth = async (req, res) => {
-
+  if (!req.user) {
+    return res.status(401).json({ message: 'Not authenticated' })
+  }
   try {
     res.status(200).json(req.user)
   } catch (error) {
