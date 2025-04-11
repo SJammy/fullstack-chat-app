@@ -3,24 +3,23 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
-import path from "path"
+import path from 'path'
 
 import { connectDB } from './lib/db.js'
 
-import authRoutes from './routes/auth.routes.js'
-import messageRoutes from './routes/message.routes.js'
-import { app, server } from "./lib/socket.js";
+import authRoutes from './routes/auth.route.js'
+import messageRoutes from './routes/message.route.js'
+import { app, server } from './lib/socket.js'
 
 dotenv.config()
 
 // REMOVE Express server app & REPLACE with Socket.io server app
 // const app = express()
 
-
 const PORT = process.env.PORT
-const __dirname  = path.resolve()
+const __dirname = path.resolve()
 
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '10mb' }))
 
 app.use(cookieParser())
 app.use(
@@ -30,19 +29,14 @@ app.use(
   })
 )
 
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
-  next();
-});
-
 app.use('/api/auth', authRoutes)
 app.use('/api/messages', messageRoutes)
 
-if (process.env.NODE_ENV==="production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")))
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')))
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend', 'dist', 'index.html'))
   })
 }
 

@@ -19,6 +19,8 @@ export const getUsersForSidebar = async (req, res) => {
 }
 
 export const getMessages = async (req, res) => {
+  // console.log("getMessages req.user: ", req.user);
+  // console.log("getMessages req.params: ", req.params);
   try {
     const { id: userToChatId } = req.params
     const myId = req.user._id
@@ -38,6 +40,10 @@ export const getMessages = async (req, res) => {
 }
 
 export const sendMessage = async (req, res) => {
+  // console.log("sendMessage req.user: ", req.user);
+  // console.log("sendMessage req.params: ", req.params);
+  // console.log("sendMessage req.body: ", req.body);
+
   try {
     const { text, image } = req.body
     const { id: receiverId } = req.params
