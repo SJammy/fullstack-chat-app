@@ -32,8 +32,3 @@ export const protectRoute = async (req, res, next) => {
   }
 }
 
-export const logRequestPath = (req, res, next) => {
-  console.log(`➡️  ${req.method} ${req.originalUrl}`);
-  next();
-}
-
